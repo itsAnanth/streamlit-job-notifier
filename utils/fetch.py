@@ -6,6 +6,7 @@ import joblib
 from email.message import EmailMessage
 from pathlib import Path
 from urllib.parse import quote
+import argparse
 
 def fetch_latest_jobs():
     headers = {'User-Agent': 'Mozilla/5.0'}
@@ -38,6 +39,7 @@ def fetch_latest_jobs():
 
 
 def fetch_jobs(keyword="Data Science", pages=2):
+    print(f"Initializing job fetch with pages={pages}")
     root_dir = Path(__file__).parents[1]
     headers = {'User-Agent': 'Mozilla/5.0'}
     base_url = f"https://www.karkidi.com/Find-Jobs"
@@ -84,4 +86,9 @@ def clean_skills(text):
 
 
 if __name__ == "__main__":
-    fetch_jobs(pages=10)
+
+    parser = argparse.ArgumentParser(description="Job fetch script")
+    parser.add_argument("--page", type=int, default=2, help="Number of job pages to scrape")
+    
+    args = parser.parse_args()
+    fetch_jobs(pages=args.page)
