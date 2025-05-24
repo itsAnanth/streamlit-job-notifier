@@ -3,6 +3,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 import pickle as pkl
 from pathlib import Path
+import pandas as pd
 
 def find_optimal_clusters(X, max_k=10):
     """Compute silhouette scores for K=2 to max_k and plot."""
@@ -83,3 +84,12 @@ def train_clusters(df):
     # Step 8: Save clustered jobs to CSV
     df.to_csv(f"{root_dir}/data/clustered_jobs.csv", index=False)
     print("Clustered job data saved to 'clustered_jobs.csv'.")
+    
+    
+
+if __name__ == "__main__":
+    root_dir = Path(__file__).parents[1]
+    jobs = pd.read_csv(root_dir / "data/jobs.csv", index_col=None)
+    
+    train_clusters(jobs)
+    

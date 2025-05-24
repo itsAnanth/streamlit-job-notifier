@@ -81,3 +81,7 @@ def fetch_jobs(keyword="Data Science", pages=2):
 def clean_skills(text):
     skills = re.split(r'[|,/\n]+', text)
     return ' '.join([re.sub(r'[^a-zA-Z\s]', '', s).lower().strip() for s in skills if s.strip()])
+
+
+if __name__ == "__main__":
+    fetch_jobs(pages=10)
