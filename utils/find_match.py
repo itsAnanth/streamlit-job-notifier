@@ -12,10 +12,10 @@ def find_match(user_skills: str) -> pandas.DataFrame:
         
     clustered_jobs_df = pandas.read_csv(root_dir / "data/clustered_jobs.csv", index_col=None)
 
-    skills = "python, js"
 
-    X = vectorizer.transform([skills])
+    X = vectorizer.transform([user_skills])
 
-    best_cluster = cluster.predict(X)[0]
+    best_cluster = cluster.predict(X)
+    best_cluster = best_cluster[0]
 
     return clustered_jobs_df[clustered_jobs_df['Cluster'] == best_cluster]
