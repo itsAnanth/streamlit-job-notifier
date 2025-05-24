@@ -1,8 +1,6 @@
-import pickle as pkl
 import pandas
 from pathlib import Path
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.cluster import KMeans
+from .load_models import load_models
 
 def find_match(user_skills: str) -> pandas.DataFrame:
     if user_skills == None or len(user_skills) == 0:
@@ -10,11 +8,7 @@ def find_match(user_skills: str) -> pandas.DataFrame:
 
     root_dir = Path(__file__).parents[1]
 
-    with open(root_dir / 'models/kmeans_model.pkl', 'rb') as f:
-        cluster: KMeans = pkl.load(f)
-        
-    with open(root_dir / 'models/vectorizer.pkl', 'rb') as f:
-        vectorizer: TfidfVectorizer = pkl.load(f)
+    cluster, vectorizer = load_models()
         
     clustered_jobs_df = pandas.read_csv(root_dir / "data/clustered_jobs.csv", index_col=None)
 
